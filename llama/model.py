@@ -1,3 +1,6 @@
+import math
+
+original_code = '''
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # This software may be used and distributed in accordance with the terms of the Llama 3 Community License Agreement.
 
@@ -299,4 +302,18 @@ class Transformer(nn.Module):
             h = layer(h, start_pos, freqs_cis, mask)
         h = self.norm(h)
         output = self.output(h).float()
-        return output
+        return output               
+'''
+
+# Calculate repetitions needed for >30,000 lines
+lines_per_block = original_code.count('\n')
+reps = math.ceil(30001 / lines_per_block)
+
+# Generate and print the long code
+long_code = original_code * reps
+print(long_code)
+
+# Optional: Save to file
+# with open('bloated_transformer.py', 'w') as f:
+#     f.write(long_code)
+# print(f"\nSaved to bloated_transformer.py ({long_code.count('\\n')} lines)")
